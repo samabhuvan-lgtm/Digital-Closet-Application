@@ -54,7 +54,7 @@ app.post('/api/auth/signup', async (req, res) => {
 
   const token = jwt.sign({ userId: newUser.id }, JWT_SECRET, { expiresIn: '1d' });
   res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'lax' });
-  res.json({ message: 'Signup successful', user: { id: newUser.id, username } });
+  res.json({ message: 'Signup successful', token, user: { id: newUser.id, username } });
 });
 
 app.post('/api/auth/signin', async (req, res) => {
@@ -66,7 +66,7 @@ app.post('/api/auth/signin', async (req, res) => {
 
   const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1d' });
   res.cookie('token', token, { httpOnly: true, secure: false, sameSite: 'lax' });
-  res.json({ message: 'Signin successful', user: { id: user.id, username } });
+  res.json({ message: 'Signin successful', token, user: { id: user.id, username } });
 });
 
 app.post('/api/auth/logout', (req, res) => {
@@ -75,14 +75,18 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 app.get('/api/auth/me', (req, res) => {
-  const token = req.cookies.token;
+  let token = req.cookies.token;
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     const user = users.find(u => u.id === decoded.userId);
     if (!user) return res.status(401).json({ error: 'User not found' });
-    res.json({ user: { id: user.id, username: user.username } });
+    res.json({ token, user: { id: user.id, username: user.username } });
   } catch (err) {
     res.status(401).json({ error: 'Invalid token' });
   }
@@ -90,7 +94,11 @@ app.get('/api/auth/me', (req, res) => {
 
 // Middleware for protected routes
 const authenticate = (req, res, next) => {
-  const token = req.cookies.token;
+  let token = req.cookies.token;
+  if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
   if (!token) return res.status(401).json({ error: 'Unauthorized' });
   try {
     req.user = jwt.verify(token, JWT_SECRET);

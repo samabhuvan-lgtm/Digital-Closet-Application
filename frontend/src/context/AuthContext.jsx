@@ -16,9 +16,19 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      }
       const res = await axios.get(`${API_URL}/auth/me`);
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+      }
       setUser(res.data.user);
     } catch (err) {
+      localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization'];
       setUser(null);
     } finally {
       setLoading(false);
@@ -27,18 +37,24 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     const res = await axios.post(`${API_URL}/auth/signin`, { username, password });
+    localStorage.setItem('token', res.data.token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     setUser(res.data.user);
     return res.data;
   };
 
   const register = async (username, password) => {
     const res = await axios.post(`${API_URL}/auth/signup`, { username, password });
+    localStorage.setItem('token', res.data.token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
     setUser(res.data.user);
     return res.data;
   };
 
   const logout = async () => {
     await axios.post(`${API_URL}/auth/logout`);
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
   };
 

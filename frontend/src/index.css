@@ -1,0 +1,332 @@
+:root {
+  --primary: #e52521; /* Mario Red */
+  --primary-glow: rgba(229, 37, 33, 0.4);
+  --secondary: #43b047; /* Luigi Green */
+  --bg: #5c94fc; /* Mario Sky Blue */
+  --surface: #c84c0c; /* Brick Red */
+  --surface-hover: #b03c00;
+  --text: #ffffff;
+  --text-muted: #f8c898;
+  --danger: #e52521;
+  --success: #43b047;
+  --coin: #fbd000;
+  --outline: #000000;
+  --text-dark: #000000;
+  --box-bg: #f8c898;
+  --pipe-green: #80d010;
+  --white-bg: #ffffff;
+  --btn-hover: #ff4742;
+  --btn-sec-hover: #5ce65c;
+  --input-focus: #fff8e7;
+  --grid-line: rgba(255,255,255,0.1);
+  --shadow-dark: rgba(0,0,0,0.5);
+  --shadow-light: rgba(255,255,255,0.3);
+}
+
+body.dark-theme {
+  --primary: #c84c0c; /* Bowser Castle Orange/Red */
+  --primary-glow: rgba(200, 76, 12, 0.4);
+  --secondary: #6020a0; /* Poison Mushroom / Haunted Purple */
+  --bg: #000000; /* Pitch Black Underground */
+  --surface: #002080; /* Underground blue bricks */
+  --surface-hover: #001050;
+  --text: #ffffff;
+  --text-muted: #a0a0c0;
+  --outline: #505050; /* Dark gray outlines to be visible against black */
+  --text-dark: #ffffff;
+  --box-bg: #181818;
+  --pipe-green: #005800;
+  --white-bg: #101010;
+  --btn-hover: #e06020;
+  --btn-sec-hover: #8040d0;
+  --input-focus: #303030;
+  --grid-line: rgba(255,255,255,0.05);
+  --shadow-dark: rgba(0,0,0,0.8);
+  --shadow-light: rgba(255,255,255,0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Press Start 2P', 'Courier New', Courier, monospace;
+  background-color: var(--bg);
+  background-image: 
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-shadow: 2px 2px 0px var(--outline);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Blocky / Brick Utilities */
+.glass {
+  background: var(--surface);
+  border: 4px solid var(--outline);
+  border-radius: 0;
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light);
+}
+
+.glass-card {
+  background: var(--surface);
+  border: 4px solid var(--outline);
+  border-radius: 0;
+  box-shadow: 8px 8px 0px var(--shadow-dark), inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light);
+  background-image: 
+    linear-gradient(45deg, var(--surface-hover) 25%, transparent 25%, transparent 75%, var(--surface-hover) 75%, var(--surface-hover)),
+    linear-gradient(45deg, var(--surface-hover) 25%, transparent 25%, transparent 75%, var(--surface-hover) 75%, var(--surface-hover));
+  background-color: var(--surface);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Gradients */
+.text-gradient {
+  color: var(--coin);
+  text-shadow: 2px 2px 0px var(--outline);
+}
+
+/* Inputs & Buttons */
+.input-field {
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--white-bg);
+  border: 4px solid var(--outline);
+  border-radius: 0;
+  color: var(--text-dark);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8rem;
+  transition: all 0.1s;
+  outline: none;
+  text-shadow: none;
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  background: var(--input-focus);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: 4px solid var(--outline);
+  padding: 14px 28px;
+  border-radius: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light), 4px 4px 0px var(--outline);
+  text-transform: uppercase;
+}
+
+.btn-primary:active {
+  transform: translate(4px, 4px);
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light), 0px 0px 0px var(--outline);
+}
+
+.btn-primary:hover {
+  background: var(--btn-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: white;
+  border: 4px solid var(--outline);
+  padding: 14px 28px;
+  border-radius: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.1s;
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light), 4px 4px 0px var(--outline);
+  text-transform: uppercase;
+}
+
+.btn-secondary:active {
+  transform: translate(4px, 4px);
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light), 0px 0px 0px var(--outline);
+}
+
+.btn-secondary:hover {
+  background: var(--btn-sec-hover);
+}
+
+/* Layout utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 768px) {
+  .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animations */
+@keyframes jump {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating {
+  animation: jump 1.5s steps(4) infinite;
+}
+
+.loader {
+  border: 4px solid var(--outline);
+  border-radius: 0;
+  background: var(--coin);
+  width: 24px;
+  height: 32px;
+  animation: spin-coin 0.5s steps(4) infinite;
+}
+
+@keyframes spin-coin {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.1); }
+  100% { transform: scaleX(1); }
+}
+
+/* Specific components */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid var(--outline);
+  background: var(--primary);
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 0 var(--outline);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: transform 0.1s;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--coin);
+  transform: translateY(-4px);
+}
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  background-image: 
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 400px;
+  padding: 2.5rem;
+  background: var(--box-bg);
+  border: 4px solid var(--outline);
+  box-shadow: 8px 8px 0px var(--shadow-dark), inset -4px -4px 0px rgba(0,0,0,0.2), inset 4px 4px 0px var(--shadow-light);
+  color: var(--text-dark);
+  text-shadow: none;
+}
+
+.auth-box h2 {
+  color: var(--primary);
+  text-shadow: 2px 2px 0px var(--outline);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.image-preview {
+  width: 100%;
+  height: 200px;
+  border: 4px dashed var(--outline);
+  background: var(--pipe-green); /* Pipe green */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset -4px -4px 0px rgba(0,0,0,0.3), inset 4px 4px 0px var(--shadow-light);
+}
+
+.outfit-card {
+  position: relative;
+  overflow: hidden;
+  border: 4px solid var(--outline);
+  aspect-ratio: 3/4;
+  background: var(--white-bg);
+  box-shadow: 6px 6px 0px var(--shadow-dark);
+}
+
+.outfit-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.1s steps(4);
+}
+
+.outfit-card:hover img {
+  transform: scale(1.1);
+}
+
+.badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--coin);
+  border: 2px solid var(--outline);
+  padding: 6px 14px;
+  font-size: 0.6rem;
+  color: #000000;
+  text-shadow: none;
+  box-shadow: 2px 2px 0px var(--outline);
+}
+
+/* Headings and specific text */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}

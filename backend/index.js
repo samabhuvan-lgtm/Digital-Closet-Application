@@ -121,6 +121,16 @@ app.get('/api/clothes', authenticate, (req, res) => {
   res.json(userClothes);
 });
 
+app.delete('/api/clothes/:id', authenticate, (req, res) => {
+  const itemId = req.params.id;
+  const index = clothes.findIndex(c => c.id === itemId && c.userId === req.user.userId);
+  if (index === -1) return res.status(404).json({ error: 'Item not found' });
+  
+  // Optionally, we could delete the file from 'uploads' here using fs.unlinkSync
+  const deletedItem = clothes.splice(index, 1)[0];
+  res.json({ message: 'Item deleted', id: deletedItem.id });
+});
+
 // --- OUTFIT ROUTES ---
 
 app.get('/api/outfit/random', authenticate, (req, res) => {

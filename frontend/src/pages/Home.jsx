@@ -59,6 +59,15 @@ export default function Home() {
     }
   };
 
+  const handleRemove = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/clothes/${id}`);
+      setClothes(clothes.filter(item => item.id !== id));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const categories = ['top', 'bottom', 'shoes', 'accessory'];
 
   return (
@@ -152,6 +161,31 @@ export default function Home() {
                 transition={{ delay: index * 0.05 }}
                 className="outfit-card glass"
               >
+                <button
+                  onClick={() => handleRemove(item.id)}
+                  style={{
+                    position: 'absolute',
+                    top: '0.5rem',
+                    left: '0.5rem',
+                    zIndex: 20,
+                    width: '32px',
+                    height: '32px',
+                    background: '#e52521', // Mario Red
+                    border: '3px solid var(--outline)',
+                    color: 'white',
+                    fontFamily: '"Press Start 2P", monospace',
+                    fontSize: '0.8rem',
+                    cursor: 'pointer',
+                    boxShadow: 'inset -2px -2px 0px rgba(0,0,0,0.4), inset 2px 2px 0px rgba(255,255,255,0.4)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    lineHeight: 1
+                  }}
+                  title="Remove Item"
+                >
+                  X
+                </button>
                 <img src={`http://localhost:3000${item.imageUrl}`} alt={item.category} />
                 <span className="badge">{item.category.toUpperCase()}</span>
               </motion.div>
